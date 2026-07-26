@@ -5,8 +5,8 @@ import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.ArrayList;
 import java.io.*;
+import java.net.URL;
 public class BankGUI extends JFrame {
-
 private void saveAccounts() {
     try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("accounts.dat"))) {
         oos.writeObject(accounts);
@@ -15,7 +15,7 @@ private void saveAccounts() {
         e.printStackTrace();
     }
 }
-
+@SuppressWarnings("unchecked")
 private void loadAccounts() {
     try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("accounts.dat"))) {
         accounts = (ArrayList<BankAccount>) ois.readObject();
@@ -54,8 +54,11 @@ private void loadAccounts() {
         
         setTitle("Bank Management System");
         loadAccounts();
-        ImageIcon icon = new ImageIcon(getClass().getResource("icon.png"));
-        setIconImage(icon.getImage());
+        URL iconUrl = getClass().getResource("/icon.png");
+
+        if (iconUrl != null) {
+           setIconImage(new ImageIcon(iconUrl).getImage());
+        }
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Fullscreen window
         setLocationRelativeTo(null);
@@ -287,8 +290,13 @@ private void loadAccounts() {
 
 
 
-    public static void main(String[] args) {
-    setUIFont(new Font("Arial", Font.PLAIN, 22)); // Set font size to 22 for all components
-    new BankGUI();  // Now create the GUI
+   public static void main(String[] args) {
+    try {
+        setUIFont(new Font("Arial", Font.PLAIN, 22));
+        new BankGUI();
+        System.out.println("GUI created successfully");
+    } catch (Throwable e) {
+        e.printStackTrace();
     }
+}
 }
