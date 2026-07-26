@@ -41,12 +41,16 @@ Bank_Management_System/
 
 - JDK 8 or later installed and available on your `PATH`
 
-### Compile
+### Compile on linux terminal
 
 ```bash
+sudo apt install git
+git init
 git clone https://github.com/ar1nd0m/Bank_Management_System.git
 cd Bank_Management_System
-javac BankGUI.java BankAccount.java
+sudo apt install defualt-jdk
+javac *.java
+java BankGUI
 ```
 
 ### Run
